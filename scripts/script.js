@@ -1,57 +1,49 @@
-import {bannerContent, banner, bgmToggle, buttons, hitBtn, resetBtn, shuffleBtn, dealBtn, standBtn, player_hand_box, player_hand_value, computer_hand_box, computer_hand_value, card_status_player, card_status_computer, howBtn, startBtn, rankingBtn, exitBtn, startMenu, gameContainer,playerBalance, totalBet, cancelBet,instructionsContainer} from './dom-elements.js';
+import {scoreboardContainer,bannerContent, banner, bgmToggle, buttons, hitBtn, resetBtn, shuffleBtn, dealBtn, standBtn, player_hand_box, player_hand_value, computer_hand_box, computer_hand_value, card_status_player, card_status_computer, howBtn, startBtn, rankingBtn, exitBtn, startMenu, gameContainer,playerBalance, totalBet, cancelBet,instructionsContainer} from './dom-elements.js';
 import {BGM, CLICK, SWIPE, WIN, LOSE} from './sounds.js';
 import {player_standing} from './profile.js'
 
+//get last computer card to show
 let last_computer_card='';
 
+//array of cards
 const player_hand = [];
 const computer_hand = [];
 
 //deck of cards
 let deck = [];
-
-let deck2 = ['ac','10c','jc','qc','kc',
-            'as','10s','js','qs','ks',
-            'ah','10h','jh','qh','kh',
-            'ad','10d','jd','qd','kd'];
-
 let player_stack = 0;
 let computer_stack = 0;
 
+//card directory
 const CARD_DIR = 'assets/cards/';
 
+//preload audio
 LOSE.preload = 'auto';
 WIN.preload = 'auto';
 
+//initial audio config
 WIN.volume=0.7;
-
 BGM.loop = true;
 BGM.volume = 0.6;
 CLICK.volume = 0.7;
 SWIPE.volume = 0.8;
 
-const myData = { name: 'John', age: 30 };
-const myData2 = { name: 'Max', age: 31 };
-
-localStorage.setItem('myKey', JSON.stringify(myData));
-
-
-
-
+//player bet
 let player_bet = 0;
-
 playerBalance.value = player_standing.balance;
 
-
+//blackjack token/chips
 const tokens = [25, 50, 100, 500];
 
-
+//initial 
 startMenu.style.display = 'flex';
 gameContainer.style.display = 'none';
 instructionsContainer.style.display = 'none';
 
+//update status of token/chips
 updateTokenButtons();
 
+//onclick function for tokens
 tokens.forEach(token => {
   const button = document.getElementById(`${token}-btn`);
   button.addEventListener('click', () => {   
@@ -69,8 +61,20 @@ tokens.forEach(token => {
 //how to play 
 howBtn.addEventListener('click',()=> {
   instructionsContainer.style.display = 'block';
+  scoreboardContainer.style.display = 'none';
   document.getElementById('blackjack-logo').style.width = '20vh';
 });
+
+//scoreboard 
+rankingBtn.addEventListener('click',()=> {
+  displayScores();
+  scoreboardContainer.style.display = 'block';
+  document.getElementById('blackjack-logo').style.width = '20vh';
+  instructionsContainer.style.display = 'none';
+
+});
+
+
 
 //revert bet
 cancelBet.addEventListener('click', ()=> {
@@ -81,21 +85,6 @@ cancelBet.addEventListener('click', ()=> {
   totalBet.textContent = 0;
 })
 
-
-function updateTokenButtons() {
-  tokens.forEach(token => {
-    const button = document.getElementById(`${token}-btn`);
-    if (player_standing.balance < token) {
-      button.style.visibility = 'hidden';
-    } else {
-      button.style.visibility = 'visible';
-    }
-  });
-}
-
-
-
-
 //set initial button status
 initialButtonStatus();
 
@@ -104,6 +93,9 @@ shuffleCards();
 
 //exit
 exitBtn.addEventListener('click', ()=> {
+  if(player_standing.balance>=3000) {
+    updateScore(player_standing.name, player_standing.balance);
+  }
   resetGame();
   player_standing.balance=1500;
   playerBalance.value = 1500;
@@ -116,8 +108,11 @@ exitBtn.addEventListener('click', ()=> {
   startMenu.style.display = 'flex';
   gameContainer.style.display = 'none';
   instructionsContainer.style.display = 'none';
+  scoreboardContainer.style.display = 'none';
   document.getElementById('blackjack-logo').style.width = '60vh';
   BGM.pause();
+
+  //update score
 });
 
 //start game
@@ -215,7 +210,6 @@ resetBtn.addEventListener('click', ()=> {
   shuffleCards();
 })
 
-
 //add click sound to all buttons
 buttons.forEach((button) => {
   button.addEventListener('click', () => {
@@ -224,6 +218,7 @@ buttons.forEach((button) => {
 });
 
 
+//computer turn
 async function computerTurn() {
   let timeouttime = 900;
   await new Promise(resolve => setTimeout(resolve, timeouttime));
@@ -237,7 +232,7 @@ async function computerTurn() {
   setTimeout(checkWhoWins, timeouttime-300);
 }
 
-
+//check winner
 function checkWhoWins(){
   const computer_score = getPlayerScore(computer_hand);
   if (isBust(computer_score)) {
@@ -285,21 +280,19 @@ function drawCard(deck, cardContainer, hand, card_stack, user, show) {
   const value = getCardValue(rank);
   hand.push(value);
   deck.splice(index, 1);
-
   // create a card element and append it to the card container
   const player_card = createCardElement(card_stack, user);
   cardContainer.appendChild(player_card);
-
   // show the card if the 'show' argument is true
   if(show) {
     showCard(`card-${user}-${card_stack}`, card);
   }
-  
   // update the card stack and the player/computer stack accordingly
   card_stack += 20;
   user === 'player' ? player_stack = card_stack : computer_stack = card_stack;
 }
 
+//create card element
 function createCardElement(card_stack, user) {
   const player_card = document.createElement('img');
   player_card.setAttribute('src', CARD_DIR + 'back_card.png');
@@ -419,7 +412,6 @@ function getPlayerScore(playerDeck){
   } else if (hasAce) {
     score += 1;
   }
-
   return score;
 }
 
@@ -459,7 +451,6 @@ function giveWinnerTokens(status) {
     player_standing.balance = player_standing.balance + player_bet;
     playerBalance.value = player_standing.balance;
   }
-
   totalBet.textContent = 0;
   player_bet = 0;
 }
@@ -472,7 +463,7 @@ function disableTokens() {
   });
 }
 
-
+//show banner announcement
 function showBanner(message,color) {
   bannerContent.textContent = message;
   banner.style.background = color;
@@ -480,10 +471,42 @@ function showBanner(message,color) {
   banner.style.display = 'block';
 }
 
+//hide banner announcement
 function hideBanner() {
   banner.style.opacity = 0;
   setTimeout(function() {
     banner.style.display = 'none';
     banner.style.opacity = 1;
   }, 500);
+}
+
+//update token statuses
+function updateTokenButtons() {
+  tokens.forEach(token => {
+    const button = document.getElementById(`${token}-btn`);
+    if (player_standing.balance < token) {
+      button.style.visibility = 'hidden';
+    } else {
+      button.style.visibility = 'visible';
+    }
+  });
+}
+
+// Update the score
+function updateScore(name, score) {
+  let scores = JSON.parse(localStorage.getItem('scores')) || [];
+  scores.push({ name: name, score: score });
+  localStorage.setItem('scores', JSON.stringify(scores));
+}
+
+// Display the scores
+function displayScores() {
+  let scores = JSON.parse(localStorage.getItem('scores')) || [];
+  let scoreList = document.getElementById('score-list');
+  scoreList.innerHTML = '';
+  scores.forEach(score => {
+    let li = document.createElement('li');
+    li.textContent = `${score.name}: $ ${score.score}`;
+    scoreList.appendChild(li);
+  });
 }
