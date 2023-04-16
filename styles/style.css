@@ -10,6 +10,10 @@
   width: 60vh;
 }
 
+main {
+  position: relative;
+}
+
 #start-menu {
   background-image: url('../assets/static/start-background.jpg');
   background-repeat: no-repeat;
@@ -286,14 +290,20 @@ input[type='text'] {
   border: solid 2px #fdc00f;
 }
 
-.banner {
+#banner {
   width: 100%;
   text-align: center;
   color: white;
   padding: 50px 0 50px 0;
-  background-color: #7219ec;
   font-size: 2em;
   font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 900;
+  transition: opacity 0.5s ease-in-out;
+
 }
 
 .card-value-total {
