@@ -1,4 +1,4 @@
-import {bgmToggle, buttons, hitBtn, resetBtn, shuffleBtn, dealBtn, standBtn, player_hand_box, player_hand_value, computer_hand_box, computer_hand_value, card_status_player, card_status_computer, howBtn, startBtn, rankingBtn, exitBtn, startMenu, gameContainer,playerBalance, totalBet, cancelBet,instructionsContainer} from './dom-elements.js';
+import {bannerContent, banner, bgmToggle, buttons, hitBtn, resetBtn, shuffleBtn, dealBtn, standBtn, player_hand_box, player_hand_value, computer_hand_box, computer_hand_value, card_status_player, card_status_computer, howBtn, startBtn, rankingBtn, exitBtn, startMenu, gameContainer,playerBalance, totalBet, cancelBet,instructionsContainer} from './dom-elements.js';
 import {BGM, CLICK, SWIPE, WIN, LOSE} from './sounds.js';
 import {player_standing} from './profile.js'
 
@@ -181,13 +181,14 @@ hitBtn.addEventListener('click', ()=>{
     //check if bust
     setTimeout(function () {
       if (isBust(getPlayerScore(player_hand))) {
-        alert('Bust, Computer wins!');
+        showBanner('Bust, Computer wins!','purple');
         LOSE.play();
         showCard('card-computer-20', last_computer_card);
         computer_hand_value.value = getPlayerScore(computer_hand);
         setTimeout(function () {
           giveWinnerTokens('loser');
           updateTokenButtons();
+          hideBanner();
           resetGame();
         },1400);  
       }
@@ -242,24 +243,26 @@ async function computerTurn() {
 function checkWhoWins(){
   const computer_score = getPlayerScore(computer_hand);
   if (isBust(computer_score)) {
+    showBanner('Computer bust, You win!','blue');
     WIN.play();
-    alert('Computer bust, You win!');
     giveWinnerTokens('winner');
   } else if (computer_score > getPlayerScore(player_hand)) {
     LOSE.play();
-    alert('Computer wins!');
+    showBanner('Computer Wins','purple');
     giveWinnerTokens('loser');
   } else if (computer_score < getPlayerScore(player_hand)) {
     WIN.play();
-    alert('You win!');
+    showBanner('You win!','blue');
     giveWinnerTokens('winner');
   } else {
     alert('It\'s a tie!');
+    showBanner('It\'s a tie!','gray');
     giveWinnerTokens('tie');
   }
   
   setTimeout(() => {
     resetGame();
+    hideBanner();
     updateTokenButtons();
     cancelBet.style.display = 'block';
   }, 1000);
@@ -477,5 +480,18 @@ function disableTokens() {
   });
 }
 
-//DESIGN
-//
+
+function showBanner(message,color) {
+  bannerContent.textContent = message;
+  banner.style.background = color;
+  banner.style.opacity = '1';
+  banner.style.display = 'block';
+}
+
+function hideBanner() {
+  banner.style.opacity = 0;
+  setTimeout(function() {
+    banner.style.display = 'none';
+    banner.style.opacity = 1;
+  }, 500);
+}
