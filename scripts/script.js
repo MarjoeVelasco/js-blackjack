@@ -128,7 +128,6 @@ startBtn.addEventListener('click', () => {
   instructionsContainer.style.display = 'none';
   //change name
   player_standing.name = document.getElementById('player-name-input').value;
-  console.log(player_standing);
 })
 
 
@@ -232,7 +231,6 @@ async function computerTurn() {
   while (getPlayerScore(computer_hand) < 17) {
     drawCard(deck, computer_hand_box, computer_hand, computer_stack, 'computer', true);
     await new Promise(resolve => setTimeout(resolve, 300));
-    console.log(computer_hand);
     timeouttime+=300;
   }
   computer_hand_value.value = getPlayerScore(computer_hand);
@@ -255,7 +253,6 @@ function checkWhoWins(){
     showBanner('You win!','blue');
     giveWinnerTokens('winner');
   } else {
-    alert('It\'s a tie!');
     showBanner('It\'s a tie!','gray');
     giveWinnerTokens('tie');
   }
@@ -273,12 +270,9 @@ function drawCard(deck, cardContainer, hand, card_stack, user, show) {
   // check if deck is empty
   if (!deck.length) {
     alert('You ran out of cards, Shuffling cards');
-    //shuffle
-    alert('');
     shuffleCards();
   }
 
-  console.log(deck.length);
   // select a random card from the deck and remove it
   const index = Math.floor(Math.random() * deck.length);
   const card = deck[index];
@@ -290,14 +284,12 @@ function drawCard(deck, cardContainer, hand, card_stack, user, show) {
   const rank = card.substring(0, card.length - 1);
   const value = getCardValue(rank);
   hand.push(value);
-  console.log(`Card: ${card}, Rank: ${rank}, Value: ${value}`);
   deck.splice(index, 1);
 
   // create a card element and append it to the card container
   const player_card = createCardElement(card_stack, user);
   cardContainer.appendChild(player_card);
 
-  console.log(show);
   // show the card if the 'show' argument is true
   if(show) {
     showCard(`card-${user}-${card_stack}`, card);
