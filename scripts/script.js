@@ -40,6 +40,7 @@ startMenu.style.display = 'flex';
 gameContainer.style.display = 'none';
 instructionsContainer.style.display = 'none';
 
+/********************** DOM TRIGGERS **********************/
 //update status of token/chips
 updateTokenButtons();
 
@@ -74,8 +75,6 @@ rankingBtn.addEventListener('click',()=> {
 
 });
 
-
-
 //revert bet
 cancelBet.addEventListener('click', ()=> {
   player_standing.balance = player_standing.balance + player_bet;
@@ -87,12 +86,12 @@ cancelBet.addEventListener('click', ()=> {
 
 //set initial button status
 initialButtonStatus();
-
 //shufflecards;
 shuffleCards();
 
-//exit
+//exit game, go back to start menu
 exitBtn.addEventListener('click', ()=> {
+  //update score
   if(player_standing.balance>=3000) {
     updateScore(player_standing.name, player_standing.balance);
   }
@@ -104,15 +103,12 @@ exitBtn.addEventListener('click', ()=> {
   cancelBet.style.display = 'block';
   totalBet.textContent=0;
   shuffleCards();
-
   startMenu.style.display = 'flex';
   gameContainer.style.display = 'none';
   instructionsContainer.style.display = 'none';
   scoreboardContainer.style.display = 'none';
   document.getElementById('blackjack-logo').style.width = '60vh';
   BGM.pause();
-
-  //update score
 });
 
 //start game
@@ -125,15 +121,12 @@ startBtn.addEventListener('click', () => {
   player_standing.name = document.getElementById('player-name-input').value;
 })
 
-
 //toggle bgm
 bgmToggle.addEventListener('click', () => {
   CLICK.play();
   BGM.paused ? (BGM.play(), bgmToggle.textContent = '🎵 on') 
   : (BGM.pause(), bgmToggle.textContent = '🎵 off');
 });
-
-
 
 //deal cards
 dealBtn.addEventListener('click', () => {
@@ -217,7 +210,7 @@ buttons.forEach((button) => {
   });
 });
 
-
+/********************** GAME FUNCTIONS **********************/
 //computer turn
 async function computerTurn() {
   let timeouttime = 900;
