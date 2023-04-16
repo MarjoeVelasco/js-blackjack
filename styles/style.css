@@ -37,6 +37,19 @@ main {
   scrollbar-color: red yellow;
 }
 
+#start-menu #scoreboard {
+  overflow-y: scroll; 
+  height:300px;
+  width: 25%;
+  background-color: rgba(150, 150, 150, 0.8);
+  border-radius: 10px;
+  padding: 20px;
+  scrollbar-color: red yellow;
+  text-align: center;
+  list-style-type: none;  
+  display: none;
+}
+
 #start-menu .button-container {
   display: flex;
   flex-direction: column;
