@@ -1,4 +1,4 @@
-export { bannerContent,banner, bgmToggle, buttons, hitBtn, resetBtn, shuffleBtn, dealBtn, standBtn, player_hand_box, player_hand_value, computer_hand_box, computer_hand_value, card_status_player, card_status_computer, howBtn, startBtn, rankingBtn, exitBtn, startMenu, gameContainer,playerBalance, totalBet, cancelBet,instructionsContainer};
+export { scoreboardContainer,bannerContent,banner, bgmToggle, buttons, hitBtn, resetBtn, shuffleBtn, dealBtn, standBtn, player_hand_box, player_hand_value, computer_hand_box, computer_hand_value, card_status_player, card_status_computer, howBtn, startBtn, rankingBtn, exitBtn, startMenu, gameContainer,playerBalance, totalBet, cancelBet,instructionsContainer};
 
 
 const bgmToggle = document.getElementById('bgm-toggle');
@@ -28,6 +28,7 @@ const startMenu = document.getElementById('start-menu');
 const gameContainer = document.getElementById('game-container');
 
 const instructionsContainer = document.getElementById('instructions');
+const scoreboardContainer = document.getElementById('scoreboard');
 
 const playerBalance = document.getElementById('player-balance');
 const totalBet = document.getElementById('total-player-bet-span');
