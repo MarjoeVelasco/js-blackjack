@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta name='description' content='Blackjack Game'>
+  <link rel='stylesheet' href='styles/style.css'>
+  <title>JS | Blackjack</title>
+  <link rel='icon' type='image/x-icon' href='favicon.ico'>
+</head>
+
+<body>
+
+
+
+
+  <main>
+
+    <!-- START MENU -->
+    <section id='start-menu'>
+      <div class='logo-container'>
+        <img src='assets/static/blackjack-logo.png' id='blackjack-logo' alt='backjack logo'>
+      </div>
+
+
+      <div id='instructions'>
+          <h1>The Objective of Blackjack</h1><br>
+          <p>Beat The Dealer. There are some misconceptions about the objective of the game of blackjack but at the simplest level all you are trying to do is beat the dealer.</p><br>
+          <h3>How do you beat the dealer?</h3>
+          <ol>
+            <li>By drawing a hand value that is higher than the dealer’s hand value</li>
+            <li>By the dealer drawing a hand value that goes over 21</li>
+            <li>By drawing a hand value of 21 on your first two cards, when the dealer does not.</li>
+          </ol> <br>
+          <h3>How do you lose to the dealer? </h3>
+          <ol>
+            <li>Your hand value exceeds 21.</li>
+            <li>The dealers hand has a greater value than yours at the end of the round</li>
+          </ol> <br>
+          <h3>How Do You Find a Hand’s Total Value?</h3>
+          <p>Blackjack is played with a conventional deck of 52 playing cards and suits don’t matter.</p>
+          <ol>
+            <li>2 through 10 count at face value, i.e. a 2 counts as two, a 9 counts as nine.</li>
+            <li>Face cards (J,Q,K) count as 10.</li>
+            <li>Ace can count as a 1 or an 11 depending on which value helps the hand the most.</li>
+          </ol>
+          <br>
+          <hr>
+          <br>
+          <h1>Playing Blackjack</h1><br>
+          <h3>Player Places a Wager</h3>
+          <p>At the start of a round the first thing you do is place a bet in the betting circle</p>
+          <p><img src='assets/instructions/chips.png' alt='game tokens/chips screenshot' width='200px'></p>
+          <br>
+          <h3>Dealer Deals Cards to Players</h3>
+          <p>After you place your bet the dealer will deal clockwise, one card, face up, to each player at the table and then one card face down for herself. Then she will deal one more card face up to each player and one more card for herself, face up. Each player has 2 cards, face up, in front of them, but the dealer has one card face up and one face down. It should look something like the picture below. Now it’s time to play the game!</p>
+          <p><img src='assets/instructions/cards-drawn.png' alt='cards drawn screenshot' width='200px'></p>
+          <br>
+          <h3>Player decides how to play hand</h3>
+          <p>You have two cards face up in front of your bet. To play your hand, first you add the card values together and get a hand total anywhere from 4 to 21. If you’re dealt a ten-value card and an Ace as your first two cards that means you got a Blackjack! Congratulations!</p>
+          <br>
+          <p>Stand – If your first two cards are acceptable, you can stand and the dealer will move on to the next player.</p><br>
+          <p>Hit – If you would like more cards to improve your hand total, the dealer will deal you more cards, one at a time, until you either “bust” (go over 21) or you choose to stand. There is no limit on the number of cards you can take (other than going over a total of 21).</p>
+          <p><img src='assets/instructions/hitstand.png' alt='hit and stand screenshot' width='200px'></p>
+
+      </div>
+
+      <div class='button-container'>
+        <div>
+          <button id='how-btn' class='btn btn-blue text-white'>How to Play</button>
+          <button id='start-btn' class='btn btn-pink text-white'>Start Game</button>
+          <button id='ranking-btn' class='btn btn-green text-white'>High Score</button>
+        </div>
+        <div>
+          <label for='player-name-input' class='text-white'>Name :</label>
+          <input type='text' placeholder='enter name' id='player-name-input' value='John Edgar'>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- GAME PROPER -->
+    <section id='game-container'>
+
+      <div id='game-settings'>
+
+      </div>
+
+      <div id='player-name-box' class='text-white'>
+        <h1>Computer</h1>
+      </div>
+
+      <div id='sound-settings'>
+        <button id='reset-btn' class='btn btn-pink text-white'>Restart</button>
+        <button id='exit-btn' class='btn btn-gray text-white'>End Game</button>
+        <button id='bgm-toggle' class='btn'>🎵 On</button>
+      </div>
+
+      <div id='card-deck-box'>
+        <div>
+          <img src='assets/cards/deck_cards.png' height='200px'>
+        </div>
+      </div>
+
+      <div id='opponent-card-box'>
+        <div>
+          <span id='card-status-computer'></span>
+          <input type='number' id='computer-hand-value' class='card-value-total text-white' value=0 readonly>
+        </div>
+        <br>
+        <div id='computer-hand-box'>
+        </div>
+      </div>
+
+      <div id='player-card-box'>
+        <div>
+          <span id='card-status-player'></span>
+          <input type='number' id='player-hand-value' class='card-value-total text-white' value=0 readonly>
+        </div>
+
+        <div id='player-hand-box'></div>
+
+      </div>
+
+
+
+      <div id='token-box'>
+        <div>
+          <p class='text-yellow font-bold'>Bet Amount:</p>
+          <p class='text-yellow font-bold'>$ <span id='total-player-bet-span'>0</span></p>
+          <br>
+          <button id='cancel-bet-btn' class='btn btn-gray text-white'>remove bet</button>
+          <div id='token-container'>
+            
+          </div>
+
+        </div>
+
+
+
+      </div>
+
+
+
+      <div id='player-controls'>
+
+
+
+      <div id='player-actions'>
+        <button id='deal-btn' class='btn btn-green text-white drop-shadow game-btn'>Deal</button>
+        <button id='hit-btn' class='btn btn-pink text-white drop-shadow game-btn'>Hit</button>
+        <button id='stand-btn' class='btn btn-blue text-white drop-shadow game-btn'>Stand</button>
+      </div>
+
+      <div id='player-balance-box'>
+
+
+
+
+        <!-- ACTUAL GAME -->
+
+
+        <!-- player chips -->
+
+        <label for='player-balance' class='text-white'>Current Balance :</label>
+        <input type='number' id='player-balance' value=0 readonly><br> <br>
+      </div>
+        <div id='token-tray'>
+          <div class='token-btn chip chip-25 text-white' id='25-btn'>25</div>
+          <div class='token-btn chip chip-50 text-white' id='50-btn'>50</div>
+          <div class='token-btn chip chip-100 text-white' id='100-btn'>100</div>
+          <div class='token-btn chip chip-500 text-white' id='500-btn'>500</div>
+        </div>
+
+
+
+
+
+
+
+
+      </div>
+
+
+
+    </section>
+  </main>
+
+</body>
+<script src='scripts/script.js' type='module'></script>
+
+</html>
