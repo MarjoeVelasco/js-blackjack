@@ -34,14 +34,10 @@ This is a simple implementation of the classic blackjack card game using only HT
 
 You can easily customize the game's appearance and behavior by modifying the `styles.css` for styling and `script.js` for the game logic.
 
-## Acknowledgments
+## Access
 
-This project was created as a learning exercise and is meant to showcase a simple implementation of a blackjack game using pure JavaScript. Feel free to use and modify the code for your own projects.
-
-## License
-
-This project is licensed under the **MIT License**.
+This can be played at [https://marjoevelasco.github.io/js-blackjack/](https://marjoevelasco.github.io/js-blackjack/)
 
 ---
 
-Have fun playing the **Pure JavaScript Blackjack Game**! If you have any questions or suggestions, feel free to contact us at [email@example.com](mailto:email@example.com).
+Have fun playing the **JavaScript Blackjack Game**! If you have any questions or suggestions, feel free to contact us at [marjoe.velasco1@gmail.com](mailto:marjoe.velasco1@gmail.com).
