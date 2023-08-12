@@ -34,7 +34,7 @@ This is a simple implementation of the classic blackjack card game using only HT
 
 You can easily customize the game's appearance and behavior by modifying the `styles.css` for styling and `script.js` for the game logic.
 
-## Access
+## Demo
 
 This can be played at [https://marjoevelasco.github.io/js-blackjack/](https://marjoevelasco.github.io/js-blackjack/)
 
